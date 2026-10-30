@@ -14,7 +14,7 @@
 
 # Alpha TradingBot
 
-It is a trading bot that has many modules to fetch data, visualize graphs, create strategies, back test the strategies, and optimize them.
+A Streamlit application for exploring market data, building trading strategies, running backtests, and optimizing strategy parameters.
 
 [WebApp Link](https://alpha-tradingbot.streamlit.app/)
 
@@ -40,7 +40,7 @@ Before setting up the project, ensure that you have the following prerequisites 
 1. Clone the project repository:
 
 ```
-git clone https://github.com/olympian-21/Alpha-Trading-Bot.git
+git clone https://github.com/ataturhan21/Alpha-Trading-Bot.git
 ```
 
 2. Navigate to the project directory:
@@ -68,10 +68,10 @@ poetry shell
 2. Run the project:
 
 ```
-streamlit run "app\🤖Welcome.py"
+streamlit run "app/🤖Welcome.py"
 ```
 
-or click start.bat file
+On Windows, you can also use `start.bat`.
 
 
 ## Contributing
