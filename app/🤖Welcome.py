@@ -18,7 +18,7 @@ def main():
         • Gather financial information from any financial market.  <br> \
         • Create trading strategies with various methods <br> \
         • Thoroughly backtest these strategies. <br> \
-        • Optimize these backtests without overfitting <br> \
+        • Compare and optimize strategy parameters <br> \
                                                <br> <br> \
         You can use the modules on the sidebar to navigate in the web app. \
     </p>'

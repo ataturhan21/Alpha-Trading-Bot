@@ -10,7 +10,7 @@ def configure_page():
         layout="wide",
         initial_sidebar_state="expanded",
         menu_items={
-            "Get Help": "https://github.com/olympian-21",
+            "Get Help": "https://github.com/ataturhan21/Alpha-Trading-Bot",
             "Report a bug": "https://alpha-tradingbot.streamlit.app/Feedback_Module",
             "About": "This is a trading bot that can be used for retrieving financial data, \
             creating trading strategies, backtesting the strategies, and optimizing the backtests. \
@@ -32,7 +32,7 @@ def configure_authors():
     )  # Moved contact info to the top of the sidebar
 
     st.sidebar.markdown(
-        """  [![Follow](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ata-turhan-555b5b160/) """
+        """  [![Follow](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/ataturhan21/) """
     )
 
 

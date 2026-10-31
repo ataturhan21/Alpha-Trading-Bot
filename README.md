@@ -23,6 +23,7 @@ A Streamlit application for exploring market data, building trading strategies, 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
+- [Application workflow](#application-workflow)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -52,10 +53,10 @@ cd Alpha-Trading-Bot
 3. Install project dependencies using Poetry:
 
 ```
-poetry install
+poetry install --no-root
 ```
 
-This command will create a virtual environment and install all the necessary dependencies specified in the `pyproject.toml` file.
+This installs the dependencies from `pyproject.toml` and `poetry.lock` without trying to package the Streamlit application.
 
 ## Usage
 
@@ -73,6 +74,21 @@ streamlit run "app/🤖Welcome.py"
 
 On Windows, you can also use `start.bat`.
 
+
+## Application workflow
+
+Run commands from the repository root so that local data, styles, and images resolve correctly.
+
+| Module | Purpose | Implementation |
+| --- | --- | --- |
+| Data | Retrieve and inspect price data | [Data preparation](app/create_data.py) |
+| Strategy | Build trading signals | [Strategy functions](app/create_strategy.py) |
+| Backtest | Evaluate a strategy on historical data | [Backtesting](app/create_backtest.py) |
+| Optimization | Compare strategy parameters | [Optimization](app/optimization.py) |
+
+The Streamlit pages are in [`app/pages/`](app/pages/); the ticker workbook is in [`data/Tickers/`](data/Tickers/). Market-data retrieval requires network access. Start with a small dataset and inspect a strategy's trades before increasing the optimization search.
+
+The repository preserves its original Python and dependency constraints. Historical backtests and parameter optimization do not establish out-of-sample performance; evaluate a separate period when comparing strategies.
 
 ## Contributing
 
