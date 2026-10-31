@@ -116,3 +116,10 @@ If you would like to contribute to this project, follow the guidelines below:
 GPL v3
 
 ---
+
+## Offline regression checks
+
+Run `poetry run python -m unittest test.test_strategy_logic`.
+Strategy expressions accept `S1`, `S2`, `and`, `or`, `not`, and parentheses.
+Indexes must align; mixing preserves the input strategies and never executes
+Python expressions. If buy and sell conditions both match, sell takes precedence.
