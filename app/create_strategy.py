@@ -1,5 +1,9 @@
 import datetime as dt
-import re
+
+if __package__:
+    from .strategy_logic import combine_strategy_signals
+else:
+    from strategy_logic import combine_strategy_signals
 
 import numpy as np
 import pandas as pd
@@ -568,33 +572,10 @@ def show_signals_on_chart(
     st.plotly_chart(fig, use_container_width=True)
 
 
-def mix_strategies(mix: set, mixing_logic: str):
+def mix_strategies(mix: list, mixing_logic: str):
     try:
-        mix_signal = np.zeros((len(mix[0]),))
-        mixing_logic = re.sub(
-            r"\bs(\d+)\b", lambda match: f"{{{match.group(1)}}}", mixing_logic
-        )
-        for m in mix:
-            m["is_buy"] = np.where(m["Signals"] == 1, 1, 0)
-            m["is_sell"] = np.where(m["Signals"] == 2, 1, 0)
-        for i in range(len(mix[0])):
-            buy_evaluations = [
-                0,
-            ]
-            sell_evaluations = [
-                0,
-            ]
-            for m in mix:
-                buy_evaluations.append(m["is_buy"].iat[i])
-                sell_evaluations.append(m["is_sell"].iat[i])
-            buy_evaluation = eval(mixing_logic.format(*buy_evaluations))
-            sell_evaluation = eval(mixing_logic.format(*sell_evaluations))
-            if buy_evaluation:
-                mix_signal[i] = 1
-            if sell_evaluation:
-                mix_signal[i] = 2
-        return pd.DataFrame(index=mix[0].index, data={"Signals": mix_signal})
-    except Exception:
+        return combine_strategy_signals(mix, mixing_logic)
+    except (ValueError, SyntaxError, TypeError, KeyError, RecursionError):
         return None
 
 
