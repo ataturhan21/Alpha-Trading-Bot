@@ -1,5 +1,4 @@
 import re
-from io import BytesIO
 
 import pandas as pd
 import streamlit as st
@@ -9,6 +8,12 @@ from configuration import (
     configure_authors,
     configure_page,
     local_css,
+)
+from data_io import (
+    SUPPORTED_PRICE_FILE_TYPES,
+    UnsupportedFileTypeError,
+    dataframe_to_excel_bytes,
+    read_price_file,
 )
 from create_data import (
     create_fundamental_data,
@@ -284,6 +289,7 @@ def main():
             st.session_state.market = market
         uploaded_file = col2.file_uploader(
             "To upload, select a csv or excel file whose first word matches the ticker name.",
+            type=list(SUPPORTED_PRICE_FILE_TYPES),
             on_change=clear_data,
         )
         st.markdown("<br>", unsafe_allow_html=True)
@@ -291,16 +297,11 @@ def main():
             ticker = re.findall(r"[\w']+", uploaded_file.name)[0]
             st.session_state["ticker"] = ticker
             try:
-                if uploaded_file.name.endswith(".csv"):
-                    st.session_state["data"] = pd.read_csv(
-                        uploaded_file, index_col="Date"
-                    )
-                elif uploaded_file.name.endswith(
-                    ".xlx"
-                ) or uploaded_file.name.endswith(".xlsx"):
-                    st.session_state["data"] = pd.read_excel(
-                        uploaded_file, index_col="Date"
-                    )
+                st.session_state["data"] = read_price_file(
+                    uploaded_file, uploaded_file.name
+                )
+            except UnsupportedFileTypeError as error:
+                col2.error(str(error))
             except IOError:
                 col2.error("You need to upload a csv or excel file.")
             except Exception:
@@ -420,20 +421,16 @@ def main():
             mime="text/csv",
         ):
             col2.success("Data was saved successfully")
-        buffer = BytesIO()
-
         if col6.download_button(
             label="Download data as Excel",
-            data=buffer,
+            data=dataframe_to_excel_bytes(st.session_state["data_to_show"]),
             file_name=file_name + ".xlsx",
-            mime="application/vnd.ms-excel",
+            mime=(
+                "application/"
+                "vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+            ),
         ):
-            with pd.ExcelWriter(buffer, engine="xlsxwriter") as writer:
-                st.session_state["data_to_show"].to_excel(
-                    writer, sheet_name="Data"
-                )
-                writer.save()
-                col6.success("Data was saved successfully")
+            col6.success("Data was saved successfully")
 
 
 if __name__ == "__main__":

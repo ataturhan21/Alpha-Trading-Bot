@@ -35,6 +35,15 @@ def fitness(ohlcv, predictions, metric_optimized, individual):
     return metrics_df["Strategy"][metric_optimized]
 
 
+def selection_probabilities(scores, beta=1):
+    """Weight scores for roulette selection; uniform when the mean is 0."""
+    scores = np.asarray(scores, dtype=float)
+    avg_cost = np.mean(scores)
+    if avg_cost == 0:
+        return np.ones_like(scores)
+    return np.exp(beta * scores / avg_cost)
+
+
 def roulette_wheel_selection(p):
     c = np.cumsum(p)
     r = sum(p) * np.random.rand()
@@ -160,10 +169,7 @@ def optimize(
         t.markdown(f"## {output} ...")
 
         scores = np.array(scores)
-        avg_cost = np.mean(scores)
-        if avg_cost != 0:
-            a = scores / avg_cost
-        probs = np.exp(beta * a)
+        probs = selection_probabilities(scores, beta)
 
         parent1 = population[roulette_wheel_selection(probs)]
         parent2 = population[roulette_wheel_selection(probs)]

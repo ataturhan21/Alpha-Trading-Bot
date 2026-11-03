@@ -60,19 +60,13 @@ This installs the dependencies from `pyproject.toml` and `poetry.lock` without t
 
 ## Usage
 
-1. Activate the virtual environment created by Poetry:
+Run the app from the repository root inside the Poetry environment:
 
 ```
-poetry shell
+poetry run streamlit run "app/🤖Welcome.py"
 ```
 
-2. Run the project:
-
-```
-streamlit run "app/🤖Welcome.py"
-```
-
-On Windows, you can also use `start.bat`.
+This works with Poetry 1.x and 2.x (`poetry shell` was removed in Poetry 2.0). On Windows, you can also use `start.bat`, which runs the same command.
 
 
 ## Application workflow
@@ -85,6 +79,7 @@ Run commands from the repository root so that local data, styles, and images res
 | Strategy | Build trading signals | [Strategy functions](app/create_strategy.py) |
 | Backtest | Evaluate a strategy on historical data | [Backtesting](app/create_backtest.py) |
 | Optimization | Compare strategy parameters | [Optimization](app/optimization.py) |
+| Feedback | Send feedback to the developer through a web form | [Feedback page](app/pages/05_📧Feedback%20Module.py) |
 
 The Streamlit pages are in [`app/pages/`](app/pages/); the ticker workbook is in [`data/Tickers/`](data/Tickers/). Market-data retrieval requires network access. Start with a small dataset and inspect a strategy's trades before increasing the optimization search.
 
@@ -119,7 +114,9 @@ If you would like to contribute to this project, follow the guidelines below:
 
 ## Offline regression checks
 
-Run `poetry run python -m unittest test.test_strategy_logic`.
+Run `poetry run python -m unittest discover -s test -t .` from the repository
+root. The tests cover strategy expressions, price-file uploads and Excel
+downloads, and the optimizer's selection weights; they need no network access.
 Strategy expressions accept `S1`, `S2`, `and`, `or`, `not`, and parentheses.
 Indexes must align; mixing preserves the input strategies and never executes
 Python expressions. If buy and sell conditions both match, sell takes precedence.
