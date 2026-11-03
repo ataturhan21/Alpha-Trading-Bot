@@ -284,8 +284,6 @@ def create_train_test_data(market: pd.DataFrame):
         for j in range(len(features))
         if selected_features_boolean[j]
     ]
-    print(f"Selected best {selected_feature_count} features:")
-    print(selected_features)
     X_test = [market[split_point:][selected_features].values.astype("float32")]
     y_train = [market[:split_point]["Label"]]
     y_test = [market[split_point:]["Label"]]
@@ -298,7 +296,6 @@ def create_train_test_data(market: pd.DataFrame):
         selected_features[feature_list_index]
         for feature_list_index in sfm.get_support(indices=True)
     ]
-    print("Selected features by random forest model: ", features)
     X_train[0] = sfm.transform(X_train[0])
     X_test[0] = sfm.transform(X_test[0])
 
@@ -306,16 +303,10 @@ def create_train_test_data(market: pd.DataFrame):
     rfe = RFE(model, n_features_to_select=10)
     fit = rfe.fit(X_train[0], y_train[0])
 
-    new_features = []
     new_feature_indices = []
     for i in range(len(fit.support_)):
         if fit.support_[i]:
-            new_features.append(features[i])
             new_feature_indices.append(i)
-    print(
-        "Selected features by recursive feature elimination-logistic regression model: ",
-        new_features,
-    )
 
     for i in range(len(X_train[0][0]) - 1, -1, -1):
         if i not in new_feature_indices:
@@ -402,7 +393,6 @@ def fetch_bls_data(data_series_id, start_year, end_year):
         for series in json_data["Results"]["series"]:
             for item in series["data"]:
                 year = int(item["year"])
-                period = item["period"]
                 period = item["period"]
                 year_mon = f"{year}-{int(period.replace('M',''))}"
                 date = dt.datetime.strptime(year_mon, "%Y-%m")
