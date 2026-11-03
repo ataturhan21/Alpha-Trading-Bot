@@ -69,7 +69,7 @@ def main():
 
         if strategy_fetch_way == "Read from a file":
             uploaded_file = center_col_get.file_uploader(
-                "Choose a csv file to upload"
+                "Choose a csv file to upload", type=["csv"]
             )
             if uploaded_file is not None:
                 try:
@@ -85,9 +85,7 @@ def main():
                                 Please, upload another signals file."
                         )
                 except FileNotFoundError as exception:
-                    center_col_get.error(
-                        "you need to upload a csv or excel file."
-                    )
+                    center_col_get.error("You need to upload a csv file.")
                 except Exception as e:
                     center_col_get.error(e)
                 else:
