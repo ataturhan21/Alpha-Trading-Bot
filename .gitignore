@@ -139,3 +139,6 @@ dmypy.json
 /Roadmap
 /Asset Price Classifier
 *.ipynb
+
+# Backtest plot reports written by the Backtest Module
+Backtest QS Plots - *.html
