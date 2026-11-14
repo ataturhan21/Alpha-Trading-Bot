@@ -4,7 +4,6 @@
 
 [![Sourcery](https://img.shields.io/badge/Sourcery-enabled-brightgreen)](https://sourcery.ai)
 [![Poetry](https://img.shields.io/badge/packaging-poetry-cyan.svg)](https://python-poetry.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![isort](https://img.shields.io/badge/%20imports-isort-%231674b1?style=flat&labelColor=ef8336)](https://pycqa.github.io/isort/)
 
@@ -25,7 +24,7 @@ A Streamlit application for exploring market data, building trading strategies, 
 - [Usage](#usage)
 - [Application workflow](#application-workflow)
 - [Contributing](#contributing)
-- [License](#license)
+- [Copyright](#copyright)
 
 ## Prerequisites
 
@@ -106,9 +105,9 @@ If you would like to contribute to this project, follow the guidelines below:
 5. Open a pull request in the original repository, describing your changes in detail.
 
 
-## License
+## Copyright
 
-[MIT](LICENSE).
+© Ata Turhan. All rights reserved. This repository has no open-source license: its code may not be copied, modified or redistributed.
 
 ---
 
